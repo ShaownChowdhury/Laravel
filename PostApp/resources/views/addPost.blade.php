@@ -10,21 +10,30 @@
             <div class="card-header">
                 Add Post
             </div>
-            <div class="card-body">
+            <div class="card-body shadow">
+ 
+                @if (session()->has('msg'))
+                    <div class="alert alert-info">{{ session('msg') }} </div>
+                @endif
 
+               
                 <form action="{{ route('store') }}" method="POST">
+
+
                     @csrf
-                    <input name="title" type="text" placeholder="Post Title" class="form-control mb-2">
+                    <input value="{{ old('title') }}" name="title" type="text" placeholder="Post Title" class="form-control mb-2">
                     @error('title')
                         <span class="text-danger">{{ $message }} </span>
                     @enderror
 
-                    <input name="detail" type="text" placeholder="Post Detail" class="form-control mb-2">
+                    <input value="{{ old('detail') }}" name="detail" type="text" placeholder="Post Detail" class="form-control mb-2">
                     @error('detail')
                     <span class="text-danger">{{ $message }} </span>
                     @enderror
-
-                    <input name="author" type="text" placeholder="Author Name" class="form-control mb-2">
+                  
+                    {{-- <textarea class="form-control mb-2" name="area" placeholder="area">{{ old('area') }}</textarea> --}}
+                    
+                    <input value="{{ old('author') }}" name="author" type="text" placeholder="Author Name" class="form-control mb-2">
                     @error('author')
                     <span class="text-danger">{{ $message }} </span>
                     @enderror

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -10,7 +11,13 @@ class PostController extends Controller
        return view('addPost');
     }
     function allPosts(){
-       return view('allPosts');
+        // $posts = Post::all();
+        // $posts = Post::latest()->get();
+        $posts = Post::latest()->paginate(4);
+        // $posts = Post::where('author','Shaown Chowdhury')->latest()->get();
+        // dd($posts);
+        return view('allPosts', compact('posts') );
+    //    return view('allPosts', [ 'p' => $posts] );
     }
     // function storePost(){
     //    echo $_REQUEST['author'];
@@ -30,5 +37,28 @@ class PostController extends Controller
         // ]
        );
 
+       // Store Data
+
+       $post = new Post();
+       $post->title = $request->title;
+       $post->detail = $request->detail;
+       $post->author = $request->author;
+       $post->save();
+        
+       return back()->with('msg','Your data inserted successfully');
     }
+ 
+    function deletePost($id){
+    $post = Post::findOrFail($id);
+    // dd($post) ;
+    $post->delete();
+    return back();
+    }
+
+    function editPost($id){
+        $post = Post::find($id);
+        return view('editPost',compact('post'));
+    }
+
+   
 }
