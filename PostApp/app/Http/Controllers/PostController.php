@@ -26,25 +26,11 @@ class PostController extends Controller
         // dd = die and dump
     //   dd($request->title);
 
-       $request->validate(
-        [
-            'title' => 'required|min:5',
-            'detail' => 'required|max:10',
-        ],
-        // [
-        //     'title.required' => 'Please enter your title',
-        //     'detail.required' => 'Please enter your detail',
-        // ]
-       );
+       $this->val($request);
 
        // Store Data
 
-       $post = new Post();
-       $post->title = $request->title;
-       $post->detail = $request->detail;
-       $post->author = $request->author;
-       $post->save();
-        
+       $this->storeAndUpdate($request);
        return back()->with('msg','Your data inserted successfully');
     }
  
@@ -56,8 +42,44 @@ class PostController extends Controller
     }
 
     function editPost($id){
+
         $post = Post::find($id);
         return view('editPost',compact('post'));
+    }
+
+
+    function updatePost(Request $request, $id){
+        
+        $this->val($request);
+        $this->storeAndUpdate($request,$id);
+        return redirect( route('posts') );
+    }
+
+
+
+    // STORE AND UPDATE
+    private function storeAndUpdate($request, $id= null){
+        $post = Post::findOrNew($id);
+        $post->title = $request->title;
+        $post->detail = $request->detail;
+        $post->author = $request->author;
+        $post->save();
+    }
+
+
+
+    // VALIDATION 
+    private function val($request){
+        $request->validate(
+            [
+                'title' => 'required|min:5',
+                'detail' => 'required|max:10',
+            ],
+            // [
+            //     'title.required' => 'Please enter your title',
+            //     'detail.required' => 'Please enter your detail',
+            // ]
+           );
     }
 
    
