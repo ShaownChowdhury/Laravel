@@ -14,10 +14,12 @@
  
             
                
-                <form action="" method="POST">
+                <form action="{{ route('update', $post->id) }}" method="POST">
 
 
                     @csrf
+                    @method('PUT')
+                    
                     <input value="{{ $post->title }}" name="title" type="text" placeholder="Post Title" class="form-control mb-2">
                     @error('title')
                         <span class="text-danger">{{ $message }} </span>
