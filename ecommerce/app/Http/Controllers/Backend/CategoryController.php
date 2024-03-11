@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\SlugGenerator;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -9,6 +10,9 @@ use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
+
+    use SlugGenerator;
+
     public function category(){
         $categories = Category::latest()->paginate(3);
         // dd($categories);
@@ -22,9 +26,12 @@ class CategoryController extends Controller
             'category' => 'required'
          ]
         );
+        $slug = $this->createSlug(Category::class,$request->category);
+        // dd($slug);
+        
         $category = new Category();
         $category->category = $request->category;
-        $category->category_slug = Str::slug($request->category) ;
+        $category->category_slug = $slug ;
         $category->save();
         return back();
     }
