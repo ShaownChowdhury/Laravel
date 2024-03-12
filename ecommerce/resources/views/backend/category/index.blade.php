@@ -19,6 +19,14 @@
                             @error('category')
                                 <span class="text-danger mb-2">{{ $message }} </span>
                             @enderror
+                            <select name="category_id" id="categoryId" class="form-control my-3">
+                                <option selected disabled>Select a parent category</option>
+                                @foreach ($categories as $category)
+                                    
+                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+
+                                @endforeach
+                            </select>
                             <button class="btn btn-primary w-100">Submit</button>
                         </form>
                     </div>
@@ -36,6 +44,14 @@
                             @method('Put')
                             <label for="category">Category Name :</label>
                             <input value="{{ $categoryEdit->category }}" name="category" type="text" id="category" class="form-control my-2" placeholder="Enter the category">
+                            <select name="category_id" id="categoryId" class="form-control my-3">
+                                <option selected disabled>Select a parent category</option>
+                                @foreach ($categories as $category)
+                                    
+                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+
+                                @endforeach
+                            </select>
                             <button class="btn btn-primary w-100">Update</button>
                         </form>
                     </div>
@@ -53,7 +69,7 @@
                         <th>Category_slug</th>
                         <th>Action</th>
                     </tr>
-                    @forelse ($categories as $key=>$category)
+                    @forelse ($parentCategories as $key=>$category)
                         <tr>
                             <td>{{ $categories->firstItem()+ $key }}</td>
                             <td> {{ $category->category }} </td>
@@ -64,6 +80,23 @@
                                     <a href="{{ route('category.delete', $category->id) }}" class="btn btn-danger btn-sm">Delete</a>
                                 </div>
                             </td>
+
+                            @if ($category->subcategories)
+
+                                @foreach ($category->subcategories as $subcategory)
+                                    
+                                    <tr>
+                                        <td>---</td>
+                                        <td> {{ $subcategory->category }} </td>
+                                        <td> {{ $subcategory->category_slug }} </td>
+                                        <td>
+                                            
+                                        </td>
+                                    </tr>
+                                @endforeach
+                                
+                            @endif
+                            
                         
                     @empty
                         
@@ -72,8 +105,10 @@
                             </td>
                             {{-- shaown --}}
                         </tr>
+                        
                        
                     @endforelse
+                    
                     
                 </table>
                 {{ $categories->links() }}
