@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\MediaUploader;
 use App\Helpers\SlugGenerator;
 use App\Models\Category;
 use Illuminate\Support\Str;
@@ -11,7 +12,7 @@ use App\Http\Controllers\Controller;
 class CategoryController extends Controller
 {
 
-    use SlugGenerator;
+    use SlugGenerator, MediaUploader;
 
     public function category(){
         $categories = Category::with('subcategories')->latest()->paginate(30);
@@ -21,19 +22,30 @@ class CategoryController extends Controller
     }
 
     public function categoryInsert(Request $request){
-    
-        $request->validate(
-         [
-            'category' => 'required'
-         ]
-        );
+     
+        // dd($request->icon->getClientOriginalExtension());
+        // $request->validate(
+        //     [
+        //         'icon' => 'required|mimes:png,jpg'
+        //     ]
+        // );
+        // $request->validate(
+        //  [
+        //     'category' => 'required'
+        //  ]
+        // );
+
         $slug = $this->createSlug(Category::class,$request->category);
-        // dd($slug);
-        
+        if($request->hasFile('icon')){
+
+            $iconPath = $this->uploadSingleMedia($request->icon,$slug,'category');
+        }
+
         $category = new Category();
         $category->category = $request->category;
         $category->category_id = $request->category_id;
         $category->category_slug = $slug ;
+        $category->icon = $request->hasFile('icon')? $iconPath :'' ;
         $category->save();
         return back();
     }
@@ -47,17 +59,27 @@ class CategoryController extends Controller
     }
 
     function categoryEdit($id){
-       $categories = Category::latest()->paginate(3);
-       $categoryEdit = Category::find($id);
+        $categories = Category::with('subcategories')->latest()->paginate(30);
+        $parentCategories = $categories->where('category_id',null)->flatten();
+        $categoryEdit = $categories->where('id',$id)->first();
+        // dd($categoryEdit);
 
-       return view('backend.category.index' ,compact('categories','categoryEdit'));
+       return view('backend.category.index' ,compact('categories','categoryEdit','parentCategories'));
     }
 
     function categoryUpdate(Request $request, $id){
-       $categoryUpdate = Category::findOrFail($id);
-       $categoryUpdate->category = $request->category;
-       $categoryUpdate->category_slug = Str::slug($request->category);
-       $categoryUpdate->save();
-       return back();
+        $slug = $this->createSlug(Category::class,$request->category);
+        if($request->hasFile('icon')){
+
+            $iconPath = $this->uploadSingleMedia($request->icon,$slug,'category',$request->old);
+        }
+
+        $category = Category::find($id);
+        $category->category = $request->category;
+        $category->category_id = $request->category_id;
+        $category->category_slug = $slug ;
+        $category->icon = $request->hasFile('icon')? $iconPath :'' ;
+        $category->save();
+        return back();
     }
 }
