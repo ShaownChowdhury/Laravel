@@ -14,12 +14,16 @@ Auth::routes();
 
 Route::get('/dashboard', [DashboardController::class,'dashboard'])->name('dashboard')->middleware('auth');
 
-Route::get('/admin/category', [CategoryController::class,'category'])->name('category')->middleware('auth');
+Route::controller(CategoryController::class)->group(function (){
+    
+Route::get('/admin/category', 'category')->name('category')->middleware('auth');
 
-Route::post('/admin/category', [CategoryController::class,'categoryInsert'])->name('category.insert')->middleware('auth');
+Route::post('/admin/category', 'categoryInsert')->name('category.insert')->middleware('auth');
 
-Route::get('/admin/categoryDelete/{id}', [CategoryController::class,'categoryDelete'])->name('category.delete')->middleware('auth');
+Route::get('/admin/categoryDelete/{id}', 'categoryDelete')->name('category.delete')->middleware('auth');
 
-Route::get('/admin/categoryEdit/{id}', [CategoryController::class,'categoryEdit'])->name('category.edit')->middleware('auth');
+Route::get('/admin/categoryEdit/{id}', 'categoryEdit')->name('category.edit')->middleware('auth');
 
-Route::put('/admin/categoryUpdate/{id}', [CategoryController::class,'categoryUpdate'])->name('category.update')->middleware('auth');
+Route::put('/admin/categoryUpdate/{id}', 'categoryUpdate')->name('category.update')->middleware('auth');
+});
+
