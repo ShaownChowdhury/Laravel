@@ -1,5 +1,9 @@
 @extends('backend.dashboard')
-
+<style>
+    img{
+        width: 40px;
+    }
+</style>
 @section('content')
     
  <section>
@@ -79,7 +83,7 @@
                         <tr>
                             <th >Serial</th>
                             <th>Category</th>
-                            <th>Category_slug</th>
+                            <th>slug</th>
                             <th>Action</th>
                         </tr>
                     </tbody>
@@ -91,7 +95,7 @@
                                 <img src="{{ asset('storage/'.$category->icon) }}" alt=""> {{ $category->category }} 
                                </b>
                             </td>
-                            <td> {{ $category->category_slug }} </td>
+                            <td> {{ $category->slug }} </td>
                             <td>
                                 <div class="btn-group">
                                     <a href="{{ route('category.edit', $category->id) }}" class="btn btn-primary btn-sm">Edit</a>
@@ -110,7 +114,7 @@
                                              <img style="width: 40px" src="{{ $subcategory->icon? asset('storage/'.$subcategory->icon): asset('frontend/assets/images/icons/placeholder.jpg') }}"> {{ $subcategory->category }} 
                                             </div>
                                         </td>
-                                        <td> {{ $subcategory->category_slug }} </td>
+                                        <td> {{ $subcategory->slug }} </td>
                                         <td>
                                           
                                                 <div class="btn-group">

@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container-fluid">
-    <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.products.store',2) }}" method="POST" enctype="multipart/form-data">
         @csrf
         
         <div class="row mt-5">
@@ -60,8 +60,8 @@
                             <div class="select-style-1">
                                     <div class="select-position">
                                       <select name="stock">
-                                        <option selected value="{{ true }} ">In Stock</option>
-                                        <option value="{{ false }}">Out Of Stock</option>
+                                        <option selected value="{{ 0 }} ">In Stock</option>
+                                        <option value="{{ 1 }}">Out Of Stock</option>
                                       </select>
                                     </div>
                                 @error('stock')
@@ -79,13 +79,29 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12">
+                        <div class="input-style-2">
+                            <textarea class="form-control" id="content" name="short_detail" placeholder="Short Detail" ></textarea>
+                            @error('short_detail')
+                                <span class="text-danger"> {{ $message }} </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="input-style-2">
+                            <textarea class="form-control" id="content2" name="long_detail" placeholder="Long Detail" ></textarea>
+                            @error('long_detail')
+                                <span class="text-danger"> {{ $message }} </span>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="d-lg-flex">
                         <div class="form-check form-switch toggle-switch me-3">
-                            <input class="form-check-input" name="status" type="checkbox" id="status" checked="">
+                            <input class="form-check-input" name="status" type="checkbox" id="status" checked value="{{ 1 }}">
                             <label class="form-check-label" for="status">Status</label>
                         </div>
                         <div class="form-check form-switch toggle-switch">
-                            <input class="form-check-input" name="featured" type="checkbox" id="featured">
+                            <input class="form-check-input" name="featured" type="checkbox" id="featured" value="{{ 1 }}">
                             <label class="form-check-label" for="featured">Featured Products</label>
                         </div>
                     </div>
@@ -98,12 +114,30 @@
                         <label>Featured Image</label>
                         <input name="featured_img" type="file">
                     </div>
+                    @error('featured_img')
+                        <span class="text-danger"> {{ $message }} </span>
+                    @enderror
                     <div class="input-style-1">
                         <label>Gallery Image</label>
                         <input name="galleries[]" type="file" multiple>
                     </div>
+                    @error('galleries.*')
+                        <span class="text-danger"> {{ $message }} </span>
+                    @enderror
                     <div class="input-style-1">
                         <label>Category</label>
+                        <select  multiple='multiple' name="categories[]" class="categoryItems form-control">
+                           
+                            @foreach ($categories as $category )
+                                <option value="{{ $category->id }}">{{ str($category->category )->headline() }}</option>
+                            @endforeach
+
+                        </select>
+                        {{-- <select class="form-control" multiple="multiple">
+                            <option selected="selected">orange</option>
+                            <option>white</option>
+                            <option selected="selected">purple</option>
+                        </select> --}}
                         
                     </div>
                 </div>
@@ -113,5 +147,31 @@
         </div>
     </form>
 </div>
+
+@push('customCss')
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<style>
+    .select2 span{
+        display: block !important;
+    }
+</style>
+
+@endpush
+@push('customJs')
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{-- <script>
+    $(document).ready(function() {
+    $('#categoryItems').select2();
+});
+</script> --}}
+<script>
+$(".categoryItems").select2({
+    tags: true,
+    tokenSeparators: [',', ' ']
+})
+</script>
+@endpush
 
 @endsection

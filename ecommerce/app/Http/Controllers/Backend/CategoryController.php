@@ -44,7 +44,7 @@ class CategoryController extends Controller
         $category = new Category();
         $category->category = $request->category;
         $category->category_id = $request->category_id;
-        $category->category_slug = $slug ;
+        $category->slug = $slug ;
         $category->icon = $request->hasFile('icon')? $iconPath :'' ;
         $category->save();
         return back();
@@ -77,7 +77,7 @@ class CategoryController extends Controller
         $category = Category::find($id);
         $category->category = $request->category;
         $category->category_id = $request->category_id;
-        $category->category_slug = $slug ;
+        $category->slug = $slug ;
         $category->icon = $request->hasFile('icon')? $iconPath :'' ;
         $category->save();
         return back();

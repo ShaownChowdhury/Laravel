@@ -24,4 +24,12 @@ class Product extends Model
         "cross_sell"
     ] ;
     // protected $guarded = ["id"];
+
+    function galleries(){
+        return $this->hasMany(Gallery::class);
+    }
+
+    function categories(){
+        return $this->belongsToMany(Category::class);
+    }
 }

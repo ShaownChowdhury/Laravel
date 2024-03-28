@@ -36,8 +36,7 @@
 
     <li class="nav-item nav-item-has-children {{ request()->routeIs('products') || request()->routeIs('products.*')? 'active':'' }}">
       <a
-        href="#0"
-        class=""
+        href="#"
         data-bs-toggle="collapse"
         data-bs-target="#products"
         aria-controls="products"
