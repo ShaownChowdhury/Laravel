@@ -133,12 +133,7 @@
                             @endforeach
 
                         </select>
-                        {{-- <select class="form-control" multiple="multiple">
-                            <option selected="selected">orange</option>
-                            <option>white</option>
-                            <option selected="selected">purple</option>
-                        </select> --}}
-                        
+                      
                     </div>
                 </div>
             </div>
@@ -161,11 +156,7 @@
 @push('customJs')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-{{-- <script>
-    $(document).ready(function() {
-    $('#categoryItems').select2();
-});
-</script> --}}
+
 <script>
 $(".categoryItems").select2({
     tags: true,
