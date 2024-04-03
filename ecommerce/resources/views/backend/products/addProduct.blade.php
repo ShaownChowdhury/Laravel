@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="input-style-2">
-                            <textarea class="form-control" id="content" name="short_detail" placeholder="Short Detail" ></textarea>
+                            <textarea class="form-control" name="short_detail" placeholder="Short Detail" ></textarea>
                             @error('short_detail')
                                 <span class="text-danger"> {{ $message }} </span>
                             @enderror
@@ -89,7 +89,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="input-style-2">
-                            <textarea class="form-control" id="content2" name="long_detail" placeholder="Long Detail" ></textarea>
+                            <textarea class="form-control" id="content" name="long_detail" placeholder="Long Detail" ></textarea>
                             @error('long_detail')
                                 <span class="text-danger"> {{ $message }} </span>
                             @enderror
@@ -156,13 +156,20 @@
 @push('customJs')
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
 
 <script>
 $(".categoryItems").select2({
-    tags: true,
+    // tags: true,
     tokenSeparators: [',', ' ']
 })
 </script>
+<script>
+    ClassicEditor.create( document.querySelector( '#content' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+  </script>
 @endpush
 
 @endsection
