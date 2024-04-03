@@ -33,6 +33,7 @@ class ProductController extends Controller
         // ]);
         // return redirect()->route('admin.products.add')->with('msg','Product Added Successfully 😊');
         // dd($this->uploadMultipleMedia($request->galleries,'gallery'));
+        dd($request->long_detail);
         $product = Product::findOrNew($id);
         if($request->hasFile('featured_img')){
             $featured_img = $this->uploadSingleMedia($request->featured_img, $this->createSlug(Product::class, $request->title),'products',$product->featured_img);
