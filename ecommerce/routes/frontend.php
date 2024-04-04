@@ -1,0 +1,13 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Frontend\ProductController;
+use App\Http\Controllers\Frontend\HomepageController;
+
+Route::get('/',[HomepageController::class,'homepage'])->name('homepage');
+Route::get('/category{slug}',[ProductController::class,'showCategoryProduct'])->name('product.category');
+
+
+
+
+?>

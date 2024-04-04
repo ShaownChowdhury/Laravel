@@ -112,7 +112,19 @@
                                     <a href="index-1.html#">Categories </a>
                                     <ul class="axil-submenu">
                                         @foreach ($categories as $category)
-                                        <li><a href="wishlist.html"> {{ $category->category }} </a></li>
+                                        <li>
+                                            <a href="{{ route('product.category',$category->slug) }}">{{ str($category->category)->headline() }}</a>
+                                            @if (count($category->subcategories) > 0)
+                                                <ul class="axil-submenu">
+                                                    @foreach ($category->subcategories as $subcategory)
+                                                    <li>
+                                                        <a href="{{ route('product.category',$subcategory->slug) }}"> {{ $subcategory->category }} </a>
+                                                        @include('layouts.components.menuCategory')
+                                                    </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </li>
                                         @endforeach
                                     </ul>
                                 </li>

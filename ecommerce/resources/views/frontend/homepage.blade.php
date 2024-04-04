@@ -180,6 +180,7 @@
         </div>
 
         <!-- Start Categorie Area  -->
+        @if (count($categories) > 0)
         <div class="axil-categorie-area bg-color-white axil-section-gapcommon">
             <div class="container">
                 <div class="section-title-wrapper">
@@ -187,128 +188,24 @@
                     <h2 class="title">Browse by Category</h2>
                 </div>
                 <div class="categrie-product-activation slick-layout-wrapper--15 axil-slick-arrow  arrow-top-slide">
+                    
+                    @foreach ($categories as $category)                
                     <div class="slick-single-layout">
                         <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-4.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Phones</h6>
+                            <a href="{{ route('product.category',$category->slug) }}">
+                                @if ($category->icon)
+                                <img class="img-fluid" src="{{ asset('storage/'.$category->icon) }}" alt="product categorie">
+                                @endif
+                                <h6 class="cat-title"> {{ $category->category }} </h6>
                             </a>
                         </div>
-                        <!-- End .categrie-product -->
                     </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="300" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-5.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Computers</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="400" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-11.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Accessories</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="500" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-6.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Laptops</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="600" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-2.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Monitors</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="700" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-7.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Networking</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product" data-sal="zoom-out" data-sal-delay="800" data-sal-duration="500">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-8.png') }}" alt="product categorie">
-                                <h6 class="cat-title">PC Gaming</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-1.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Smartwatches</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-9.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Headphones</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-10.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Camera & Photo</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-8.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Video Games</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
-                    <!-- End .slick-single-layout -->
-                    <div class="slick-single-layout">
-                        <div class="categrie-product">
-                            <a href="index-1.html#">
-                                <img class="img-fluid" src="{{ asset('frontend/assets/images/product/categories/elec-1.png') }}" alt="product categorie">
-                                <h6 class="cat-title">Sports</h6>
-                            </a>
-                        </div>
-                        <!-- End .categrie-product -->
-                    </div>
+                    @endforeach
+                    
                 </div>
             </div>
         </div>
+        @endif
         <!-- End Categorie Area  -->
 
         <!-- Poster Countdown Area  -->
