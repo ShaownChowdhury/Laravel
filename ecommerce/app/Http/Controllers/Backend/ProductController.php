@@ -15,9 +15,14 @@ class ProductController extends Controller
     use MediaUploader,SlugGenerator;
     function addProduct(){
         $categories = Category::select('id','category')->latest()->get();
+        // dd($categories);
         return view('Backend.products.addProduct',compact('categories'));
     }
     function storeProduct(Request $request,$id){
+
+           $request->validate([
+            'galleries.*' => 'mimes:jpg,png'
+           ]);
         // $request->validate([
         //     "title" => 'required',
         //     // "price" => 'required',
@@ -33,7 +38,7 @@ class ProductController extends Controller
         // ]);
         // return redirect()->route('admin.products.add')->with('msg','Product Added Successfully 😊');
         // dd($this->uploadMultipleMedia($request->galleries,'gallery'));
-        dd($request->long_detail);
+        // dd($request->long_detail);
         $product = Product::findOrNew($id);
         if($request->hasFile('featured_img')){
             $featured_img = $this->uploadSingleMedia($request->featured_img, $this->createSlug(Product::class, $request->title),'products',$product->featured_img);
@@ -59,16 +64,19 @@ class ProductController extends Controller
         }
 
         // PRODUCT GALLERY
-        if($request->galleries() && count($request->galleries) > 0){
-            $galleries = $this->uploadMultipleMedia($request->galleries,'galleries');
-
-            foreach($galleries as $singleGalleryImage){
-            $gallery = new Gallery;
+        if( $request->galleries && count($request->galleries) > 0){
+            $galleries = $this->uploadMultipleMedia($request-> galleries,'galleries');
+            
+          foreach($galleries as $singleGalleryImage) {
+            $gallery = new Gallery();
             $gallery->title = $singleGalleryImage;
             $gallery->product_id = $product->id;
             $gallery->save();
-            }
+          }
+
+          // dd($galleries);
         }
+
 
 
     }
