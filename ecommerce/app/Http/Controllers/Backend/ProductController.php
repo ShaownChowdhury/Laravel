@@ -38,7 +38,7 @@ class ProductController extends Controller
         // ]);
         // return redirect()->route('admin.products.add')->with('msg','Product Added Successfully 😊');
         // dd($this->uploadMultipleMedia($request->galleries,'gallery'));
-        // dd($request->long_detail);
+        // dd($request->all());
         $product = Product::findOrNew($id);
         if($request->hasFile('featured_img')){
             $featured_img = $this->uploadSingleMedia($request->featured_img, $this->createSlug(Product::class, $request->title),'products',$product->featured_img);
@@ -55,26 +55,30 @@ class ProductController extends Controller
         $product->featured = $request->featured ?? 0;
         $product->short_detail = $request->short_detail;
         $product->long_detail = $request->long_detail;
+
         $product->save();
+
+        
+        // PRODUCT GALLERY
+        if( $request->galleries ){
+          $galleries = $this->uploadMultipleMedia($request->galleries,'galleries');
+          
+        foreach($galleries as $singleGalleryImage) {
+          $gallery = new Gallery();
+          $gallery->title = $singleGalleryImage;
+          $gallery->product_id = $product->id;
+          $gallery->save();
+        }
+        
+      }
+      // dd($galleries);
+
+        // dd($product);
 
         if($product){
           $product->categories()->sync($request->categories);
           return redirect()->route('admin.products.add')->with('msg','Product Added Successfully');
 
-        }
-
-        // PRODUCT GALLERY
-        if( $request->galleries && count($request->galleries) > 0){
-            $galleries = $this->uploadMultipleMedia($request-> galleries,'galleries');
-            
-          foreach($galleries as $singleGalleryImage) {
-            $gallery = new Gallery();
-            $gallery->title = $singleGalleryImage;
-            $gallery->product_id = $product->id;
-            $gallery->save();
-          }
-
-          // dd($galleries);
         }
 
 
