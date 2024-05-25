@@ -14,12 +14,12 @@
             <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
                 <div class="axil-product product-style-one">
                     <div class="thumbnail">
-                            <a href="single-product.html">
+                            <a href="{{ route('product.show', $product->slug) }}">
                             @if ($product->featured_img)
                             <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800" loading="lazy" class="main-img" src="{{ asset('storage/'. $product->featured_img) }}" alt="{{ $product->featured_img }}">
                             @endif
                             @if ($product->galleries && count($product->galleries) > 0 )
-                            <img class="hover-img" src="{{ asset('frontend/assets/images/product/electric/product-08.png') }}" alt="Product Images">
+                            <img class="hover-img" src="{{ asset('storage/'.$product->galleries[0]->title) }}" alt="{{ $product->title }}">
                             @endif
                         </a>
                         <div class="label-block label-right">
@@ -31,7 +31,7 @@
                             <ul class="cart-action">
                                 <li class="quickview"><a href="index-1.html#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
                                 <li class="select-option">
-                                    <a href="single-product.html">
+                                    <a href="{{ route('product.show', $product->slug) }}">
                                         Add to Cart
                                     </a>
                                 </li>
@@ -51,7 +51,7 @@
                         </span>
                                 <span class="rating-number">(64)</span>
                             </div>
-                            <h5 class="title"><a href="single-product.html">
+                            <h5 class="title"><a href="{{ route('product.show', $product->slug) }}">
                                 {{ $product->title }} </a></h5>
                             <div class="product-price-variant">
                                 @if ($product->selling_price)
