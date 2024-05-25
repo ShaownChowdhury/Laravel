@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\HomepageController;
 
 Route::get('/',[HomepageController::class,'homepage'])->name('homepage');
 Route::get('/category{slug}',[ProductController::class,'showCategoryProduct'])->name('product.category');
+Route::get('/product/{slug}',[ProductController::class,'showProduct'])->name('product.show');
 
 
 
