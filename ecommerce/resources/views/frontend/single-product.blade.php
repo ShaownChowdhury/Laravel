@@ -72,16 +72,33 @@
                                 @else
                                 <span class="price-amount">{{ $product->price }}Tk</span>
                                 @endif
+                                @php
+                                    $rating = $product->reviews->avg('rating');
+                                @endphp
                                 <div class="product-rating">
-                                    <div class="star-rating">
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="fas fa-star"></i>
-                                        <i class="far fa-star"></i>
+                                   <div class="position-relative">
+                                    <div class="star-rating position-absolute">
+                                        @while ($rating > 0)
+                                            
+                                          @if ($rating > 0.5)
+                                          <i class="fas fa-star"></i>
+                                          @else
+                                          <i class="fas fa-star-half"></i>
+                                          @endif
+
+                                          @php
+                                              $rating--
+                                          @endphp
+                                        @endwhile
                                     </div>
+                                    <div class="star-rating">
+                                        @foreach (range(1,5) as $i)
+                                        <i class="far fa-star"></i>
+                                        @endforeach
+                                    </div>
+                                   </div>
                                     <div class="review-link">
-                                        <a href="single-product-3.html#">(<span>2</span> customer reviews)</a>
+                                        <a href="single-product-3.html#">(<span>{{ count($product->reviews) > 0 ? count($product->reviews) : 0 }}</span> customer reviews)</a>
                                     </div>
                                 </div>
                                 <ul class="product-meta">
@@ -196,9 +213,10 @@
                             <div class="row">
                                 <div class="col-lg-6 mb--40">
                                     <div class="axil-comment-area pro-desc-commnet-area">
-                                        <h5 class="title">01 Review for this product</h5>
+                                        <h5 class="title">{{ count($product->reviews) }} Review for this product</h5>
                                         <ul class="comment-list">
                                             <!-- Start Single Comment  -->
+                                            @foreach ($product->reviews as $review)
                                             <li class="comment">
                                                 <div class="comment-body">
                                                     <div class="single-comment">
@@ -221,74 +239,13 @@
                                                                 </span>
                                                             </h6>
                                                             <div class="comment-text">
-                                                                <p>“We’ve created a full-stack structure for our working workflow processes, were from the funny the century initial all the made, have spare to negatives. ” </p>
+                                                                <p>“{{ $review->msg }} ” </p>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
-                                            <!-- End Single Comment  -->
-
-                                            <!-- Start Single Comment  -->
-                                            <li class="comment">
-                                                <div class="comment-body">
-                                                    <div class="single-comment">
-                                                        <div class="comment-img">
-                                                            <img src="assets/images/blog/author-image-4.png" alt="Author Images">
-                                                        </div>
-                                                        <div class="comment-inner">
-                                                            <h6 class="commenter">
-                                                                <a class="hover-flip-item-wrapper" href="single-product-3.html#">
-                                                                    <span class="hover-flip-item">
-                                                                        <span data-text="Rahabi Khan">Courtney Henry</span>
-                                                                    </span>
-                                                                </a>
-                                                                <span class="commenter-rating ratiing-four-star">
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                </span>
-                                                            </h6>
-                                                            <div class="comment-text">
-                                                                <p>“We’ve created a full-stack structure for our working workflow processes, were from the funny the century initial all the made, have spare to negatives. ”</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <!-- End Single Comment  -->
-
-                                            <!-- Start Single Comment  -->
-                                            <li class="comment">
-                                                <div class="comment-body">
-                                                    <div class="single-comment">
-                                                        <div class="comment-img">
-                                                            <img src="assets/images/blog/author-image-5.png" alt="Author Images">
-                                                        </div>
-                                                        <div class="comment-inner">
-                                                            <h6 class="commenter">
-                                                                <a class="hover-flip-item-wrapper" href="single-product-3.html#">
-                                                                    <span class="hover-flip-item">
-                                                                        <span data-text="Rahabi Khan">Devon Lane</span>
-                                                                    </span>
-                                                                </a>
-                                                                <span class="commenter-rating ratiing-four-star">
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                </span>
-                                                            </h6>
-                                                            <div class="comment-text">
-                                                                <p>“We’ve created a full-stack structure for our working workflow processes, were from the funny the century initial all the made, have spare to negatives. ” </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
+                                            @endforeach
                                             <!-- End Single Comment  -->
                                         </ul>
                                     </div>

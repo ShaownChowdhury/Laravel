@@ -32,4 +32,9 @@ class Product extends Model
     function categories(){
         return $this->belongsToMany(Category::class);
     }
+
+    function reviews(){
+        return $this->hasMany(Review::class);
+    }
+
 }
