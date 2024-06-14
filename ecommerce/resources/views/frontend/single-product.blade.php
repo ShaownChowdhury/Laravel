@@ -221,22 +221,40 @@
                                                 <div class="comment-body">
                                                     <div class="single-comment">
                                                         <div class="comment-img">
-                                                            <img src="assets/images/blog/author-image-4.png" alt="Author Images">
+                                                            <img src="{{  getProfileImage() }}" alt="Author Images">
                                                         </div>
                                                         <div class="comment-inner">
                                                             <h6 class="commenter">
                                                                 <a class="hover-flip-item-wrapper" href="single-product-3.html#">
                                                                     <span class="hover-flip-item">
-                                                                        <span data-text="Cameron Williamson">Eleanor Pena</span>
+                                                                        <span data-text="Cameron Williamson">{{ $review->user->name }}</span>
                                                                     </span>
                                                                 </a>
                                                                 <span class="commenter-rating ratiing-four-star">
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star"></i></a>
-                                                                    <a href="single-product-3.html#"><i class="fas fa-star empty-rating"></i></a>
-                                                                </span>
+                                                                    <div class="product-rating">
+                                                                        <div class="position-relative">
+                                                                         <div class="star-rating position-absolute">
+                                                                             @while ($review->rating > 0)
+                                                                                 
+                                                                               @if ($review->rating > 0.5)
+                                                                               <i class="fas fa-star"></i>
+                                                                               @else
+                                                                               <i class="fas fa-star-half"></i>
+                                                                               @endif
+                                     
+                                                                               @php
+                                                                                   $review->rating--
+                                                                               @endphp
+                                                                             @endwhile
+                                                                         </div>
+                                                                         <div class="star-rating">
+                                                                             @foreach (range(1,5) as $i)
+                                                                             <i class="far fa-star"></i>
+                                                                             @endforeach
+                                                                         </div>
+                                                                        </div>                                                                        
+                                                                     </div>                   
+                                                                    </span>
                                                             </h6>
                                                             <div class="comment-text">
                                                                 <p>“{{ $review->msg }} ” </p>

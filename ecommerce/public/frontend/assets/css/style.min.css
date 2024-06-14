@@ -12964,7 +12964,7 @@ body.open .closeMask {
 }
 .comment-list .comment .single-comment .comment-img img {
     border-radius: 100%;
-    width: 100%;
+    width: 30%;
 }
 .comment-list .comment .commenter {
     line-height: 33px;
