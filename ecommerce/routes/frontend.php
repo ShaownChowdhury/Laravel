@@ -8,7 +8,7 @@ Route::get('/',[HomepageController::class,'homepage'])->name('homepage');
 Route::get('/category{slug}',[ProductController::class,'showCategoryProduct'])->name('product.category');
 Route::get('/product/{slug}',[ProductController::class,'showProduct'])->name('product.show');
 
-
+Route::get('/products/search',[ProductController::class,'searchProduct'])->name('product.search');
 
 
 ?>

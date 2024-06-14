@@ -536,7 +536,7 @@
             <div class="card-header">
                 <form action="index-1.html#">
                     <div class="input-group">
-                        <input type="search" class="form-control" name="prod-search" id="prod-search" placeholder="Write Something....">
+                        <input type="search" class="form-control" name="prod-search" id="productSearch" placeholder="Write Something....">
                         <button type="submit" class="axil-btn btn-bg-primary"><i class="far fa-search"></i></button>
                     </div>
                 </form>
@@ -739,7 +739,32 @@
     <script src="{{ asset('frontend/assets/js/vendor/counterup.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/vendor/waypoints.min.js') }}"></script>
     <script src="{{ asset('frontend/assets/js/main.js') }}"></script>
+    <script>
 
+        $('#productSearch').keyup(function(){
+            
+            
+            let search = $(this).val();
+
+            if(search.length > 3){
+               $.ajax({
+                 url: `{{ route('product.search') }}`,
+                 method: 'GET',
+                 data: {
+                    search: search
+                 },
+                 success: function(res){
+                    console.log(res)
+                 }
+               })
+            }else{
+                console.log('nothing found');
+            }
+
+
+        })
+
+    </script>
 </body>
 
 </html>

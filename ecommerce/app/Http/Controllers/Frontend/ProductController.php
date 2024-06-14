@@ -32,4 +32,10 @@ class ProductController extends Controller
         // dd($product->reviews);
      return view('frontend.single-product',compact('product'));
     }
+
+    function searchProduct(Request $request){
+       $search = $request->search;
+
+       $products = Product::where('title','LIKE','%'. $search . '%')->take(2)->get();
+    }
 }
