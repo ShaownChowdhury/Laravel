@@ -114,19 +114,27 @@
                                 <!-- Start Product Action Wrapper  -->
                                 @if ($product->stock)
                                     
-                                <div class="product-action-wrapper d-flex-center">
-                                    <!-- Start Quentity Action  -->
-                                    <div class="pro-qty"><input type="text" value="1"></div>
-                                    <!-- End Quentity Action  -->
+                                <form action="{{ route('cart.store') }}" method="POST">
 
-                                    <!-- Start Product Action  -->
-                                    <ul class="product-action d-flex-center mb--0">
-                                        <li class="add-to-cart"><a href="cart.html" class="axil-btn btn-bg-primary">Add to Cart</a></li>
-                                        <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
-                                    </ul>
-                                    <!-- End Product Action  -->
+                                    @csrf
 
-                                </div>
+                                    <div class="product-action-wrapper d-flex-center">
+                                        <!-- Start Quentity Action  -->
+                                        <div class="pro-qty"><input type="text" value="1" min="1" name="qty"></div>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                        <!-- End Quentity Action  -->
+    
+                                        <!-- Start Product Action  -->
+                                        <ul class="product-action d-flex-center mb--0">
+                                            <li class="add-to-cart">
+                                                <button class="axil-btn btn-bg-primary">Add to Cart</button>
+                                            </li>
+                                            <li class="wishlist"><a href="wishlist.html" class="axil-btn wishlist-btn"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <!-- End Product Action  -->
+    
+                                    </div>
+                                </form>
                                 @endif
 
                                 <!-- End Product Action Wrapper  -->
