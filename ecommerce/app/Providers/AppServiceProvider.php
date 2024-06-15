@@ -2,11 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Cart;
 use App\Models\Category;
+use function Laravel\Prompts\select;
+
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-
-use function Laravel\Prompts\select;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -25,7 +26,10 @@ class AppServiceProvider extends ServiceProvider
     {
        view()->composer('layouts.frontendLayout', function ($view) {
         $view->with([
-            'categories' => Category::with('subcategories')->select('id','category_id','category','slug')->whereNull('category_id')->get() ]);
+            'categories' => Category::with('subcategories')->select('id','category_id','category','slug')->whereNull('category_id')->get(),
+            'cartCount' => Cart::where('customer_id',auth('customer')->id())->count()
+        ]);
+
        });
 
        Paginator::useBootstrapFive();
