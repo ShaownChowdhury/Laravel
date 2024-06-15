@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\CartController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\HomepageController;
@@ -31,6 +32,22 @@ Route::get('/signout',[LoginController::class,'logout'])->name('signout');
 Route::get('/my-profile',function(){
     return view('frontend.MyAccount');
 })->middleware('customer');
+
+
+
+
+// Cart Routes
+Route::middleware('customer')->name('cart.')->prefix('/cart/')->controller(CartController::class)->group(function (){
+    Route::post('/cart-store','storeCart')->name('store');
+    Route::get('/cart-view','viewCart')->name('view');
+});
+
+
+
+
+
+
+
 
 
 ?>
