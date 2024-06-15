@@ -542,26 +542,19 @@
                 </form>
             </div>
             <div class="card-body">
-                <div class="search-result-header">
-                    <h6 class="title">24 Result Found</h6>
+                <div class="search-result-header" style="display: none">
+                    <h6 class="title"><span>24</span> Result Found</h6>
                     <a href="shop.html" class="view-all">View All</a>
                 </div>
                 <div class="psearch-results">
-                    <div class="axil-product-list">
+                    {{-- <div class="axil-product-list">
                         <div class="thumbnail">
                             <a href="single-product.html">
                                 <img src="{{ asset('frontend/assets/images/product/electric/product-09.png') }}" alt="Yantiti Leather Bags">
                             </a>
                         </div>
                         <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
-                            </span>
+                            
                                 <span class="rating-number"><span>100+</span> Reviews</span>
                             </div>
                             <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
@@ -574,35 +567,8 @@
                                 <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
                             </div>
                         </div>
-                    </div>
-                    <div class="axil-product-list">
-                        <div class="thumbnail">
-                            <a href="single-product.html">
-                                <img src="{{ asset('frontend/assets/images/product/electric/product-09.png') }}" alt="Yantiti Leather Bags">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <div class="product-rating">
-                                <span class="rating-icon">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fal fa-star"></i>
-                            </span>
-                                <span class="rating-number"><span>100+</span> Reviews</span>
-                            </div>
-                            <h6 class="product-title"><a href="single-product.html">Media Remote</a></h6>
-                            <div class="product-price-variant">
-                                <span class="price current-price">$29.99</span>
-                                <span class="price old-price">$49.99</span>
-                            </div>
-                            <div class="product-cart">
-                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
-                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    </div> --}}
+                    
                 </div>
             </div>
         </div>
@@ -753,12 +719,48 @@
                  data: {
                     search: search
                  },
-                 success: function(res){
-                    console.log(res)
+                 success: function({products,productsCount}){
+                    
+                    $('.search-result-header').show()
+                    $('.search-result-header .title span').html(productsCount)
+
+                    let productsList = [];
+
+                    
+                    products.forEach(product =>{
+                        
+                        let productUrl = `{{ route('product.show', 'slug') }}`
+                        productUrl = productUrl.replace('slug',product.slug)
+                        
+                        
+                        let html = `<div class="axil-product-list">
+                        <div class="thumbnail">
+                            <a href="${productUrl}">
+                                <img width="80px" src="{{ asset('storage/') }}/${product.featured_img}" alt="${product.title}">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            
+                            <h6 class="product-title"><a href="${productUrl}">${product.title} </a></h6>
+                            <div class="product-price-variant">
+                                ${product.selling_price ? `<span class="price current-price">${product.selling_price} TK</span>
+                                <span class="price old-price">${product.price} TK</span>`: `
+                                <span class="price current-price">${product.price} TK</span>`}
+                                
+                            </div>
+                            <div class="product-cart">
+                                <a href="cart.html" class="cart-btn"><i class="fal fa-shopping-cart"></i></a>
+                                <a href="wishlist.html" class="cart-btn"><i class="fal fa-heart"></i></a>
+                            </div>
+                        </div>
+                    </div>`
+                    productsList.push(html)
+                    // console.table(html)
+                    })
+
+                    $('.psearch-results').html(productsList)
                  }
                })
-            }else{
-                console.log('nothing found');
             }
 
 
