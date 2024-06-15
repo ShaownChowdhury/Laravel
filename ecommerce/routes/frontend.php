@@ -30,7 +30,7 @@ Route::get('/signout',[LoginController::class,'logout'])->name('signout');
 
 Route::get('/my-profile',function(){
     return view('frontend.MyAccount');
-});
+})->middleware('customer');
 
 
 ?>
