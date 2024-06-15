@@ -37,5 +37,11 @@ class ProductController extends Controller
        $search = $request->search;
 
        $products = Product::where('title','LIKE','%'. $search . '%')->take(2)->get();
+       $count = Product::where('title','LIKE','%'. $search . '%')->count();
+
+       return response()->json([
+         'products' => $products,
+         'productsCount' => $count
+       ]);
     }
 }
