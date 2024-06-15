@@ -112,6 +112,8 @@
 
                                
                                 <!-- Start Product Action Wrapper  -->
+                                @if ($product->stock)
+                                    
                                 <div class="product-action-wrapper d-flex-center">
                                     <!-- Start Quentity Action  -->
                                     <div class="pro-qty"><input type="text" value="1"></div>
@@ -125,6 +127,8 @@
                                     <!-- End Product Action  -->
 
                                 </div>
+                                @endif
+
                                 <!-- End Product Action Wrapper  -->
                             </div>
                         </div>
