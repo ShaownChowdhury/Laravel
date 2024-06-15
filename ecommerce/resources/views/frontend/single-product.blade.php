@@ -221,7 +221,7 @@
                                                 <div class="comment-body">
                                                     <div class="single-comment">
                                                         <div class="comment-img">
-                                                            <img src="{{  getProfileImage() }}" alt="Author Images">
+                                                            <img src="{{  getProfileImage() }}" style="width:60px" alt="Author Images">
                                                         </div>
                                                         <div class="comment-inner">
                                                             <h6 class="commenter">
