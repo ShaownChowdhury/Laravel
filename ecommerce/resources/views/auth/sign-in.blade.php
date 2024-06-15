@@ -82,6 +82,8 @@
                                 <a href="forgot-password.html" class="forgot-btn">Forget password?</a>
                             </div>
                         </form>
+                        <a href="{{ route('google.login') }}" class="btn btn-danger btn-lg ">Google</a>
+                        <a href="{{ route('facebook.login') }}" class="btn btn-primary btn-lg ">facebook</a>
                     </div>
                 </div>
             </div>
