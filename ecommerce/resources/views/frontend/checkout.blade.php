@@ -150,28 +150,34 @@
                             <div class="order-payment-method">
                                 <div class="single-payment">
                                     <div class="input-group">
-                                        <input type="radio" id="radio4" name="payment">
+                                        <input type="radio" id="radio4" name="payment" value="bank">
                                         <label for="radio4">Direct bank transfer</label>
                                     </div>
                                     <p>Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                                 </div>
                                 <div class="single-payment">
                                     <div class="input-group">
-                                        <input type="radio" id="radio5" name="payment">
+                                        <input type="radio" id="radio5" name="payment" value="cash">
                                         <label for="radio5">Cash on delivery</label>
                                     </div>
                                     <p>Pay with cash upon delivery.</p>
                                 </div>
                                 <div class="single-payment">
                                     <div class="input-group justify-content-between align-items-center">
-                                        <input type="radio" id="radio6" name="payment" checked>
-                                        <label for="radio6">Paypal</label>
-                                        <img src="assets/images/others/payment.png" alt="Paypal payment">
+                                        <input type="radio" id="radio6" name="payment" checked value="ssl">
+                                        <label for="radio6">SSL Ecommerz</label>
+                                        <img src="assets/images/others/payment.png" alt="Payment SSL Ecommerz">
                                     </div>
-                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.</p>
+                                    <p>Pay via SSL Ecommerz; you can pay with your credit card if you don’t have a PayPal account.</p>
                                 </div>
                             </div>
                             <button type="submit" class="axil-btn btn-bg-primary checkout-btn">Process to Checkout</button>
+                            <button style="display: none" id="sslczPayBtn"
+                                    token="if you have any token validation"
+                                    postdata=""
+                                    order="If you already have the transaction generated for current order"
+                                    endpoint="/pay-via-ajax"> Pay Now
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -179,6 +185,41 @@
         </div>
     </div>
     <!-- End Checkout Area  -->
-
+  
 </main>
+
+   @push('customJs')
+   <script>
+        
+        $('input[name="payment"]').change(function(){
+            alert($(this).val())
+        })
+
+
+        var obj = {};
+        obj.cus_name = $('#customer_name').val();
+        obj.cus_phone = $('#mobile').val();
+        obj.cus_email = $('#email').val();
+        obj.cus_addr1 = $('#address').val();
+        obj.amount = $('#total_amount').val();
+        
+        $('#sslczPayBtn').prop('postdata', obj);
+
+
+   
+ 
+        (function (window, document) {
+        var loader = function () {
+            var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
+            script.src = "https://sandbox.sslcommerz.com/embed.min.js?" + Math.random().toString(36).substring(7);
+            tag.parentNode.insertBefore(script, tag);
+        };
+
+        window.addEventListener ? window.addEventListener("load", loader, false) : window.attachEvent("onload", loader);
+        })(window, document);
+
+
+   </script>
+   @endpush
+
 @endsection
