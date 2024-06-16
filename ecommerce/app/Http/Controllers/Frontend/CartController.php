@@ -28,6 +28,27 @@ class CartController extends Controller
     }
 
     function viewCart(){
-      return 'hi';
+      $carts = Cart::with('product:id,slug,title,featured_img,price,selling_price')->where('customer_id',auth('customer')->id())->get();
+      // dd($carts);
+      return view('frontend.cart',compact('carts'));
     }
+
+    function updateCart(Request $request){
+      // return $request->all();
+      
+      foreach($request->qty as $productId=>$qty){
+         $cart = Cart::where('product_id',$productId)->where('customer_id',auth('customer')->id())->first();
+         // dd($cart);
+         $cart->qty = $qty;
+         $cart->save();
+      }
+      return back();
+    }
+
+    function deleteCart($id){
+      Cart::find($id)->delete();
+      return back();
+    }
+
+   
 }
