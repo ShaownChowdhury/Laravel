@@ -767,6 +767,9 @@
         })
 
     </script>
+
+    @stack('customJs')
+
 </body>
 
 </html>
