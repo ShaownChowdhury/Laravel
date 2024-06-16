@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\Frontend\CartController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\HomepageController;
 use App\Http\Controllers\Frontend\Auth\LoginController;
@@ -39,7 +40,14 @@ Route::get('/my-profile',function(){
 // Cart Routes
 Route::middleware('customer')->name('cart.')->prefix('/cart/')->controller(CartController::class)->group(function (){
     Route::post('/cart-store','storeCart')->name('store');
+    Route::post('/cart-update','updateCart')->name('update');
     Route::get('/cart-view','viewCart')->name('view');
+    Route::get('/cart-delete/{id}','deleteCart')->name('delete');
+});
+
+// Order Routes
+Route::middleware('customer')->name('order.')->prefix('/order/')->controller(OrderController::class)->group(function (){
+    Route::get('/checkout','checkout')->name('checkout');
 });
 
 
