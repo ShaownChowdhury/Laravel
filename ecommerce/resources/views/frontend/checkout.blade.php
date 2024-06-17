@@ -6,6 +6,7 @@
     <div class="axil-checkout-area axil-section-gap">
         <div class="container">
             <form action="checkout.html#">
+               
                 <div class="row">
                     <div class="col-lg-6">
                         
@@ -15,13 +16,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>First Name <span>*</span></label>
-                                        <input type="text" id="first-name" value="{{ auth('customer')->user()->name }}">
+                                        <input type="text" id="first_name" value="{{ auth('customer')->user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <label>Last Name <span>*</span></label>
-                                        <input type="text" id="last-name" placeholder="Last Name" value="{{ auth('customer')->user()->last_name ?? null}}">
+                                        <input type="text" id="last_name" placeholder="Last Name" value="{{ auth('customer')->user()->last_name ?? null}}">
                                     </div>
                                 </div>
                             </div>
@@ -108,41 +109,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $total = 0
+                                        @endphp
+                                        @foreach ($carts as $cart)
+                                            
                                         <tr class="order-product">
-                                            <td>Commodo Blown Lamp <span class="quantity">x1</span></td>
-                                            <td>$117.00</td>
+                                            <td>{{ $cart->product->title }} <span class="quantity">x{{ $cart->qty }} </span></td>
+                                            <td>{{ $cart->qty* ($cart->product->selling_price ?? $cart->product->price) }} Tk</td>
                                         </tr>
-                                        <tr class="order-product">
-                                            <td>Commodo Blown Lamp <span class="quantity">x1</span></td>
-                                            <td>$198.00</td>
-                                        </tr>
-                                        <tr class="order-subtotal">
-                                            <td>Subtotal</td>
-                                            <td>$117.00</td>
-                                        </tr>
-                                        <tr class="order-shipping">
-                                            <td colspan="2">
-                                                <div class="shipping-amount">
-                                                    <span class="title">Shipping Method</span>
-                                                    <span class="amount">$35.00</span>
-                                                </div>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio1" name="shipping" checked>
-                                                    <label for="radio1">Free Shippping</label>
-                                                </div>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio2" name="shipping">
-                                                    <label for="radio2">Local</label>
-                                                </div>
-                                                <div class="input-group">
-                                                    <input type="radio" id="radio3" name="shipping">
-                                                    <label for="radio3">Flat rate</label>
-                                                </div>
-                                            </td>
-                                        </tr>
+
+                                        @php
+                                            $total += $cart->qty* ($cart->product->selling_price ?? $cart->product->price)
+                                        @endphp
+                                        @endforeach
+                                        
+                                        
                                         <tr class="order-total">
                                             <td>Total</td>
-                                            <td class="order-total-amount">$323.00</td>
+                                            <td class="order-total-amount">
+                                                {{$total}} Tk
+                                                <input type="hidden" name="amount" id="totalAmount" value="{{ $total }}">
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -192,22 +180,49 @@
    <script>
         
         $('input[name="payment"]').change(function(){
-            alert($(this).val())
+            if($(this).val() == 'ssl'){
+                $('.checkout-btn').hide()
+                $('#sslczPayBtn').show()
+            }else{
+                $('.checkout-btn').show()
+                $('#sslczPayBtn').hide()
+            }
         })
 
 
+    $('#sslczPayBtn').click(function(){
         var obj = {};
-        obj.cus_name = $('#customer_name').val();
-        obj.cus_phone = $('#mobile').val();
+        obj.fname = $('#first_name').val();
+        obj.lname = $('#last_name').val();
+        obj.company = $('#company_name').val();
+        obj.address = $('#address1').val();
+        obj.address2 = $('#address2').val();
+        obj.town = $('#town').val();
+        obj.phone = $('#phone').val();
         obj.cus_email = $('#email').val();
-        obj.cus_addr1 = $('#address').val();
-        obj.amount = $('#total_amount').val();
+        obj.amount = $('#totalAmount').val();
+        obj.total_qty = {{ $carts->sum('qty') }}
         
         $('#sslczPayBtn').prop('postdata', obj);
+    })
 
 
-   
- 
+        var obj = {};
+        obj.fname = $('#first_name').val();
+        obj.lname = $('#last_name').val();
+        obj.company = $('#company_name').val();
+        obj.address = $('#address1').val();
+        obj.address2 = $('#address2').val();
+        obj.town = $('#town').val();
+        obj.phone = $('#phone').val();
+        obj.cus_email = $('#email').val();
+        obj.amount = $('#totalAmount').val();
+        obj.total_qty = {{ $carts->sum('qty') }}
+
+        
+        $('#sslczPayBtn').prop('postdata', obj);
+        
+
         (function (window, document) {
         var loader = function () {
             var script = document.createElement("script"), tag = document.getElementsByTagName("script")[0];
