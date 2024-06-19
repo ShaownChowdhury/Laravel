@@ -282,6 +282,8 @@
                                     <!-- End .axil-commnet-area -->
                                 </div>
                                 <!-- End .col -->
+                                @auth('customer')
+                                
                                 <div class="col-lg-6 mb--40">
                                     <!-- Start Comment Respond  -->
                                     <div class="comment-respond pro-des-commend-respond mt--0">
@@ -328,6 +330,8 @@
                                     </div>
                                     <!-- End Comment Respond  -->
                                 </div>
+
+                                @endauth
                                 <!-- End .col -->
                             </div>
                         </div>
