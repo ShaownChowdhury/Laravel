@@ -93,7 +93,7 @@
                                                         </td>
                                                         <td> {{ $order->status }} </td>
                                                         <td> {{ $order->total_amount }} Tk for  {{ $order->total_qty }}  items</td>
-                                                        <td><a href="{{ route('invoice.download') }}" class="axil-btn view-btn">Download</a></td>
+                                                        <td><a href="{{ route('invoice.download',$order->id) }}" class="axil-btn view-btn">Download</a></td>
                                                     </tr>
                                                 @empty
                                                     <h4>No orders found </h4>
