@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
 
 class MyAccountController extends Controller
@@ -14,7 +15,13 @@ class MyAccountController extends Controller
         return view('frontend.MyAccount',compact('orders'));
     }
 
-    function downloadInvoice(){
-        return view('frontend.invoice');
+    function downloadInvoice($id){
+        // return view('frontend.invoice');
+        $order = Order::with('orderItems.product:id,title')->where('id',$id)->where('customer_id',auth('customer')->user()->id)->first();
+        $data = compact('order');
+        // dd($data);
+        
+        $pdf = Pdf::loadView('frontend.invoice', $data);
+        return $pdf->download('invoice.pdf');
     }
 }
