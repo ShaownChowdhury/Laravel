@@ -48,8 +48,13 @@
                         <div class="header-top-link">
                             <ul class="quick-link">
                                 <li><a href="index-1.html#">Help</a></li>
+                                @guest('customer')
+                                    
                                 <li><a href="{{ route('signup') }}">Join Us</a></li>
                                 <li><a href="{{ route('signin') }}">Sign In</a></li>
+
+                                @endguest
+
                             </ul>
                         </div>
                     </div>
