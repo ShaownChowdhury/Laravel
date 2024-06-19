@@ -29,7 +29,7 @@ class ProductController extends Controller
 
     function showProduct($slug){
         $product = Product::with(['galleries','reviews.user'])->where('slug',$slug)->first();
-        dd(auth('customer')->user()->hasOrder());
+        // dd();
      return view('frontend.single-product',compact('product'));
     }
 
