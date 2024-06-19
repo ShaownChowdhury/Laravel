@@ -13,6 +13,7 @@ use App\Http\Controllers\Frontend\Auth\RegisterController;
 use App\Http\Controllers\Frontend\MyAccountController;
 
 Route::get('/',[HomepageController::class,'homepage'])->name('homepage');
+Route::get('/shop',[HomepageController::class,'shopPage'])->name('shop');
 Route::get('/category{slug}',[ProductController::class,'showCategoryProduct'])->name('product.category');
 Route::get('/product/{slug}',[ProductController::class,'showProduct'])->name('product.show');
 
@@ -34,8 +35,8 @@ Route::get('/facebook/redirect',[SocialController::class, 'facebookVerify'])->na
 Route::get('/signout',[LoginController::class,'logout'])->name('signout');
 
 
-Route::get('/my-profile',[MyAccountController::class,'myAccount'])->middleware('customer');
-Route::get('/my-invoice',[MyAccountController::class,'downloadInvoice'])->name('invoice.download')->middleware('customer');
+Route::get('/my-profile',[MyAccountController::class,'myAccount'])->name('myProfile')->middleware('customer');
+Route::get('/my-invoice/{id}',[MyAccountController::class,'downloadInvoice'])->name('invoice.download')->middleware('customer');
 
 
 

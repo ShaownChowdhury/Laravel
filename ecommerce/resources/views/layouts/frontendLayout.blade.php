@@ -97,7 +97,7 @@
                                     </ul>
                                 </li>
                                 <li class="menu-item-has-children">
-                                    <a href="index-1.html#">Shop</a>
+                                    <a href="{{ route('shop') }}">Shop</a>
                                     <ul class="axil-submenu">
                                         <li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
                                         <li><a href="shop.html">Shop no Sidebar</a></li>
@@ -179,7 +179,7 @@
                                     <span class="title">QUICKLINKS</span>
                                     <ul>
                                         <li>
-                                            <a href="my-account.html">My Account</a>
+                                            <a href="{{ route('myProfile') }}">My Account</a>
                                         </li>
                                         <li>
                                             <a href="index-1.html#">Initiate return</a>
