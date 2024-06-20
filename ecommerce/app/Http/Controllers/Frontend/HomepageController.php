@@ -23,6 +23,12 @@ class HomepageController extends Controller
         ->select('id','title','slug','featured_img','price','selling_price','status')
         ->paginate(15);
         // dd($products);
-        return view('frontend.shopSidebar',compact('products'));
+
+        $categories = Category::get();
+        return view('frontend.shopSidebar',compact('products','categories'));
+    }
+
+    function filterProducts(Request $request){
+        return $request->categories;
     }
 }
