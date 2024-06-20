@@ -40,14 +40,14 @@
                             <h6 class="title">CATEGORIES</h6>
                             <div class="shop-submenu">
                                 <ul>
-                                    <li class="current-cat"><a href="shop-sidebar.html#">Sun Care</a></li>
-                                    <li><a href="shop-sidebar.html#">Night Care</a></li>
-                                    <li><a href="shop-sidebar.html#">Treatments</a></li>
-                                    <li><a href="shop-sidebar.html#">Moisturizers</a></li>
-                                    <li><a href="shop-sidebar.html#">Eye Care</a></li>
-                                    <li><a href="shop-sidebar.html#">Masks</a></li>
-                                    <li><a href="shop-sidebar.html#">Featured</a></li>
-                                    <li><a href="shop-sidebar.html#">On Sale</a></li>
+                                    @foreach ($categories as $category)
+                                        
+                                    <li class="currect-cat">
+                                        <input type="checkbox" name="categories" id="category{{ $category->id }}" value="{{ $category->slug }}">
+                                        <label for="category{{ $category->id }}"> {{ str($category->category)->headline() }} </label>
+                                    </li>
+                                    
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                     <div class="row row--15">
                         @forelse ($products as $product)
                 
-            <div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
+            <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb--30">
                 <div class="axil-product product-style-one">
                     <div class="thumbnail">
                             <a href="{{ route('product.show', $product->slug) }}">
@@ -218,3 +218,35 @@
     
 </main>
 @endsection
+
+@push('customJs')
+    <script>
+        const categoryValues = []
+
+        $('input[name="categories"]').change(function(){
+            if($(this).is(":checked")){
+                categoryValues.push($(this).val())
+            }else{
+                categoryValues.splice(categoryValues.indexOf($(this).val(),1))
+            }
+            // console.log(categoryValues);
+            getFilterdProduct(categoryValues)
+        })
+
+        function getFilterdProduct(category=null ,price=null ,ordering=null ){
+
+            $.ajax({
+                url: "{{ route('filter.shop') }}",
+                method: 'get',
+                data: {
+                    categories: category,
+                    price: price,
+                    ordering : ordering
+                },
+                success: function(res){
+                    console.log(res);
+                }
+            })
+        }
+    </script>
+@endpush

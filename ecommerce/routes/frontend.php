@@ -14,6 +14,7 @@ use App\Http\Controllers\Frontend\MyAccountController;
 
 Route::get('/',[HomepageController::class,'homepage'])->name('homepage');
 Route::get('/shop',[HomepageController::class,'shopPage'])->name('shop');
+Route::get('/filter-products',[HomepageController::class,'filterProducts'])->name('filter.shop');
 Route::get('/category{slug}',[ProductController::class,'showCategoryProduct'])->name('product.category');
 Route::get('/product/{slug}',[ProductController::class,'showProduct'])->name('product.show');
 
