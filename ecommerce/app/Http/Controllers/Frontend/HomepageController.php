@@ -29,6 +29,24 @@ class HomepageController extends Controller
     }
 
     function filterProducts(Request $request){
-        return $request->categories;
+       
+        $query = Product::query();
+
+        // Category 
+        if($request->categories){
+           $query->whereHas('categories', function($q) use ($request){
+             return $q->whereIn('slug', $request->categories);
+           });
+        }
+
+        // PRICING
+        if($request->price){
+            $query->whereBetween('price', [$request->price['min'], $request->price['max']]);
+        }
+
+        $products = $query->with('galleries')->orderBy($request->ordering['order'],$request->ordering['sort'])->get();
+        // Product::max('price');
+        
+        return $products;
     }
 }
