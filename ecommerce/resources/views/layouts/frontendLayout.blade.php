@@ -67,10 +67,10 @@
             <div class="container">
                 <div class="header-navbar">
                     <div class="header-brand">
-                        <a href="index.html" class="logo logo-dark">
+                        <a href="{{ route('homepage') }}" class="logo logo-dark">
                             <img src="{{ asset('frontend/assets/images/logo/logo.png') }}" alt="Site Logo">
                         </a>
-                        <a href="index.html" class="logo logo-light">
+                        <a href="{{ route('homepage') }}" class="logo logo-light">
                             <img src="{{ asset('frontend/assets/images/logo/logo-light.png') }}" alt="Site Logo">
                         </a>
                     </div>
@@ -79,13 +79,13 @@
                         <nav class="mainmenu-nav">
                             <button class="mobile-close-btn mobile-nav-toggler"><i class="fas fa-times"></i></button>
                             <div class="mobile-nav-brand">
-                                <a href="index.html" class="logo">
+                                <a href="{{ route('homepage') }}" class="logo">
                                     <img src="{{ asset('frontend/assets/images/logo/logo.png') }}" alt="Site Logo">
                                 </a>
                             </div>
                             <ul class="mainmenu">
                                 <li class="menu-item-has-children">
-                                    <a href="index-1.html#">Home</a>
+                                    <a href="{{ route('homepage') }}">Home</a>
                                     <ul class="axil-submenu">
                                         <li><a href="index-1.html">Home - Electronics</a></li>
                                         <li><a href="index-2.html">Home - NFT</a></li>
