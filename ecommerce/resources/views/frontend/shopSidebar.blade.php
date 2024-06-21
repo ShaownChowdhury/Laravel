@@ -10,7 +10,7 @@
                         <ul class="axil-breadcrumb">
                             <li class="axil-breadcrumb-item"><a href="index.html">Home</a></li>
                             <li class="separator"></li>
-                            <li class="axil-breadcrumb-item active" aria-current="page">My Account</li>
+                            <li class="axil-breadcrumb-item active" aria-current="page">Shop</li>
                         </ul>
                         <h1 class="title">Explore All Products</h1>
                     </div>
@@ -18,7 +18,7 @@
                 <div class="col-lg-6 col-md-4">
                     <div class="inner">
                         <div class="bradcrumb-thumb">
-                            <img src="assets/images/product/product-45.png" alt="Image">
+                            <img src="{{ asset('frontend/assets/images/product/product-38.png') }}" alt="Image">
                         </div>
                     </div>
                 </div>
@@ -51,57 +51,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="toggle-list product-categories product-gender active">
-                            <h6 class="title">GENDER</h6>
-                            <div class="shop-submenu">
-                                <ul>
-                                    <li class="chosen"><a href="shop-sidebar.html#">Men (40)</a></li>
-                                    <li><a href="shop-sidebar.html#">Women (56)</a></li>
-                                    <li><a href="shop-sidebar.html#">Unisex (18)</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="toggle-list product-color active">
-                            <h6 class="title">COLORS</h6>
-                            <div class="shop-submenu">
-                                <ul>
-                                    <li class="chosen"><a href="shop-sidebar.html#" class="color-extra-01"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-02"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-03"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-04"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-05"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-06"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-07"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-08"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-09"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-10"></a></li>
-                                    <li><a href="shop-sidebar.html#" class="color-extra-11"></a></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div class="toggle-list product-size active">
-                            <h6 class="title">SIZE</h6>
-                            <div class="shop-submenu">
-                                <ul>
-                                    <li class="chosen"><a href="shop-sidebar.html#">XS</a></li>
-                                    <li><a href="shop-sidebar.html#">S</a></li>
-                                    <li><a href="shop-sidebar.html#">M</a></li>
-                                    <li><a href="shop-sidebar.html#">L</a></li>
-                                    <li><a href="shop-sidebar.html#">XL</a></li>
-                                    <li><a href="shop-sidebar.html#">XXL</a></li>
-                                    <li><a href="shop-sidebar.html#">3XL</a></li>
-                                    <li><a href="shop-sidebar.html#">4XL</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                        
                         <div class="toggle-list product-price-range active">
                             <h6 class="title">PRICE</h6>
                             <div class="shop-submenu">
-                                <ul>
-                                    <li class="chosen"><a href="shop-sidebar.html#">30</a></li>
-                                    <li><a href="shop-sidebar.html#">5000</a></li>
-                                </ul>
+                                
                                 <form action="shop-sidebar.html#" class="mt--25">
                                     <div id="slider-range"></div>
                                     <div class="flex-center mt--20">
@@ -122,11 +76,11 @@
                                 <div class="category-select align-items-center justify-content-lg-end justify-content-between">
                                     <!-- Start Single Select  -->
                                     <span class="filter-results">Showing 1-12 of 84 results</span>
-                                    <select class="single-select">
-                                        <option>Short by Latest</option>
-                                        <option>Short by Oldest</option>
-                                        <option>Short by Name</option>
-                                        <option>Short by Price</option>
+                                    <select class="single-select" name="sorting">
+                                        <option value="created_at.desc">Short by Latest</option>
+                                        <option value="created_at.asc">Short by Oldest</option>
+                                        <option value="price.asc">Low Price</option>
+                                        <option value="price.desc">High Price</option>
                                     </select>
                                     <!-- End Single Select  -->
                                 </div>
@@ -137,7 +91,7 @@
                         </div>
                     </div>
                     <!-- End .row -->
-                    <div class="row row--15">
+                    <div class="row row--15 productArea">
                         @forelse ($products as $product)
                 
             <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb--30">
@@ -150,6 +104,7 @@
                             @if ($product->galleries && count($product->galleries) > 0 )
                             <img class="hover-img" src="{{ asset('storage/'.$product->galleries[0]->title) }}" alt="{{ $product->title }}">
                             @endif
+                            
                         </a>
                         <div class="label-block label-right">
                             @if ($product->selling_price)
@@ -222,6 +177,14 @@
 @push('customJs')
     <script>
         const categoryValues = []
+        const priceValue = {
+            min: 0,
+            max: 9999999999
+        }
+        const orderValue = {
+            order: 'created_at',
+            sort: 'desc'
+        }
 
         $('input[name="categories"]').change(function(){
             if($(this).is(":checked")){
@@ -230,8 +193,32 @@
                 categoryValues.splice(categoryValues.indexOf($(this).val(),1))
             }
             // console.log(categoryValues);
-            getFilterdProduct(categoryValues)
+            getFilterdProduct(categoryValues, priceValue, orderValue)
         })
+
+        $('#slider-range').slider({
+                range: true,
+                min: 0,
+                max: 5000,
+                values: [0, 5000],
+                change: function(event, ui) {
+                    priceValue.min = ui.values[0]
+                    priceValue.max = ui.values[1]
+                getFilterdProduct(categoryValues, priceValue, orderValue)
+                }, 
+                slide: function(event, ui) {
+                    $('#amount').val('Tk' + ui.values[0] + '  Tk' + ui.values[1]);
+                }
+        });
+
+        $('select[name="sorting"]').change(function(){
+           let value = $(this).val()
+           orderValue.order = value.split('.')[0]
+           orderValue.sort = value.split('.')[1]
+           getFilterdProduct(categoryValues, priceValue, orderValue)
+
+        //    console.log(orderValue)
+        });
 
         function getFilterdProduct(category=null ,price=null ,ordering=null ){
 
@@ -244,7 +231,86 @@
                     ordering : ordering
                 },
                 success: function(res){
-                    console.log(res);
+                   // PRODUCT FOREACH /  MAP
+                   
+                //    console.log(res)
+                //    return false;
+
+                   
+                   const productLists = []
+                   res.map(product => {
+                    let url = "{{ route('product.show', '::slug') }}"
+                    url = url.replace('::slug',product.slug)
+                    console.log(url);
+                    
+                    
+                    let productHtml = `
+
+                    <div class="col-xl-4 col-lg-4 col-sm-6 col-12 mb--30">
+                        <div class="axil-product product-style-one">
+                            <div class="thumbnail">
+                                <a href="${url}">
+                                    
+                                    ${product.featured_img ? (
+                                        `<img class="main-img" src="{{ asset('storage/' ) }}/${product.featured_img}" alt="${product.title}">`
+                                    ) : null }
+
+                                    ${product.galleries ? (
+                                    `<img class="hover-img" src="{{ asset('storage/' ) }}/${product.galleries[0].title}" alt="${product.title}">`
+                                    ) : null }
+                                
+                                </a>
+                                <div class="label-block label-right">
+                                    <div class="product-badget"> 
+                                    ${Math.ceil(((product.price - product.selling_price)/product.price)*100)} % Off  
+                                    </div>
+                                </div>
+                                <div class="product-hover-action">
+                                    <ul class="cart-action">
+                                        <li class="quickview"><a href="index-1.html#" data-bs-toggle="modal" data-bs-target="#quick-view-modal"><i class="far fa-eye"></i></a></li>
+                                        <li class="select-option">
+                                            <a href="${url}">
+                                                Add to Cart
+                                            </a>
+                                        </li>
+                                        <li class="wishlist"><a href="wishlist.html"><i class="far fa-heart"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="product-content">
+                                <div class="inner">
+                                    <div class="product-rating">
+                                        <span class="icon">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </span>
+                                        <span class="rating-number">(64)</span>
+                                    </div>
+                                    <h5 class="title"><a href="${url}">
+                                        ${product.title} </a></h5>
+                                    <div class="product-price-variant">
+                                        ${product.selling_price ? (
+                                            `<span class="price current-price"> ${product.selling_price} </span>
+                                            <span class="price old-price"> ${product.price} </span>`
+                                        ) : (
+                                            `<span class="price current-price"> ${product.price} </span> `
+                                        )}    
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    `
+
+                    productLists.push(productHtml)
+
+                   })
+                   $('.productArea').html(productLists)
+
                 }
             })
         }
